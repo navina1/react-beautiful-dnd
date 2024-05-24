@@ -1,5 +1,6 @@
+// Column.js
 import React from 'react';
-import { Typography, List,  Container } from '@mui/material';
+import { Typography, List, Container } from '@mui/material';
 import Task from './Task';
 import { Droppable } from 'react-beautiful-dnd';
 
@@ -17,9 +18,7 @@ function Column({ column, tasks }) {
                     >
                         <List>
                             {tasks.map((task, index) => (
-                                
-                                    <Task  task={task} index={index} />
-                               
+                                <Task key={task.id} task={task} index={index} />
                             ))}
                             {provided.placeholder}
                         </List>
