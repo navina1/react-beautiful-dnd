@@ -1,4 +1,3 @@
-// DroppableArea.js
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import DraggableItem from './DraggableItem';
@@ -16,12 +15,14 @@ const DroppableArea = ({ id, items, onDrop }) => {
     <div
       ref={drop}
       className="droppable-area"
-      style={{ background: isOver ? 'lightblue' : 'lightgray', height: '10rem', textAlign: 'center', marginTop: '20px' }}
+      style={{ background: isOver ? 'lightblue' : 'lightgray', height: '10rem', textAlign: 'center', marginTop: '20px', padding: '10px', border: '1px solid black' }}
     >
-      <h3>List {id}</h3>
-      <ul>
+      <h3>{id}</h3>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
         {items.map((item) => (
-          <DraggableItem key={item.id} id={item.id} content={item.content} />
+          <li key={item.id}>
+            <DraggableItem id={item.id} content={item.content} />
+          </li>
         ))}
       </ul>
     </div>

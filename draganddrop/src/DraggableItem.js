@@ -1,4 +1,3 @@
-// DraggableItem.js
 import React from 'react';
 import { useDrag } from 'react-dnd';
 
@@ -17,7 +16,7 @@ const DraggableItem = ({ id, content }) => {
         <div
           ref={drag}
           className="draggable-item"
-          style={{ opacity: isDragging ? 0.5 : 1, margin:"0.8rem", cursor:"pointer", textAlign:"center", border:"1px dotted red", padding:"0.5rem" }}
+          style={{ opacity: isDragging ? 0.5 : 1, margin: "0.8rem", cursor: "pointer", textAlign: "center", border: "1px dotted red", padding: "0.5rem" }}
         >
           {content}
         </div>
