@@ -18,11 +18,15 @@ const App = () => {
 
   const handleDrop = (item, listId) => {
     if (listId === 'list1') {
-      setList1Items(list1Items.filter((listItem) => listItem.id !== item.id));
+      setList1Items([...list1Items, item]);
+      setList2Items(list2Items.filter((listItem) => listItem.id !== item.id));
     } else {
       setList2Items([...list2Items, item]);
+      setList1Items(list1Items.filter((listItem) => listItem.id !== item.id));
     }
   };
+
+  
   
 
   return (
