@@ -1,56 +1,46 @@
 // App.js
-import React from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
-import initialData from './initialData';
-import Column from './Column';
-import { Container } from '@mui/material';
+import React, { useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import DraggableItem from './DraggableItem';
+import DroppableArea from './DraggableArea';
 
-function App() {
-    const [state, setState] = React.useState(initialData);
+const App = () => {
+  const [list1Items, setList1Items] = useState([
+    { id: 'item1', content: 'Item 1' },
+    { id: 'item2', content: 'Item 2' },
+  ]);
 
-    const onDragEnd = (result) => {
-        const { destination, source, draggableId } = result;
+  const [list2Items, setList2Items] = useState([
+    { id: 'item3', content: 'Item 3' },
+    { id: 'item4', content: 'Item 4' },
+  ]);
 
-        if (!destination) {
-            return;
-        }
+  const handleDrop = (item, listId) => {
+    if (listId === 'list1') {
+      setList1Items(list1Items.filter((listItem) => listItem.id !== item.id));
+    } else {
+      setList2Items([...list2Items, item]);
+    }
+  };
+  
 
-        if (destination.droppableId === source.droppableId && destination.index === source.index) {
-            return;
-        }
-
-        const column = state.columns[source.droppableId];
-        const newTaskIds = Array.from(column.taskIds);
-        newTaskIds.splice(source.index, 1);
-        newTaskIds.splice(destination.index, 0, draggableId);
-
-        const newColumn = {
-            ...column,
-            taskIds: newTaskIds,
-        };
-
-        const newState = {
-            ...state,
-            columns: {
-                ...state.columns,
-                [newColumn.id]: newColumn,
-            },
-        };
-
-        setState(newState);
-    };
-
-    return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <Container>
-                {state.columnOrder.map((columnId) => {
-                    const column = state.columns[columnId];
-                    const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
-                    return <Column key={column.id} column={column} tasks={tasks} />;
-                })}
-            </Container>
-        </DragDropContext>
-    );
-}
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <div className="app">
+        {/* <div className="draggable-container">
+          <DraggableItem id="item1" content="Item 1" />
+          <DraggableItem id="item2" content="Item 2" />
+          <DraggableItem id="item3" content="Item 3" />
+          <DraggableItem id="item4" content="Item 4" />
+        </div> */}
+        <div className="droppable-container">
+          <DroppableArea id="list1" items={list1Items} onDrop={handleDrop} />
+          <DroppableArea id="list2" items={list2Items} onDrop={handleDrop} />
+        </div>
+      </div>
+    </DndProvider>
+  );
+};
 
 export default App;

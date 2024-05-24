@@ -1,4 +1,3 @@
-// initialData.js
 const initialData = {
     tasks: {
         'task-1': { id: 'task-1', content: 'Take out the garbage' },
